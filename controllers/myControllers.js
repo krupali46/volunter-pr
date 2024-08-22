@@ -5,7 +5,7 @@ let volstorage = [];
 
 const defultcon = (req, res) => {
     console.log("defult contorllers");
-    res.render('index' , {v : volstorage});
+    res.render('index' , {v:volstorage});
 }
 
 const addcon = (req, res) => {
@@ -27,19 +27,32 @@ const addcon = (req, res) => {
     res.redirect('/');
 };
 
-const editcon = (req, res) => {
-    console.log("edittocon");
-    const {id} = req.params;
+// const editcon = (req, res) => {
+//     console.log("edittocon");
+//     const {id} = req.params;
    
-    const singleRec = volstorage.find((vol) => vol.id == id);
-    console.log("singlerec",singleRec);
-    res.render('editForm' , {singleRec})  
-}
+//     const singleRec = volstorage.find((vol) => vol.id == id);
+//     console.log("singlerec",singleRec);
+//     res.render('editForm' , {singleRec})  
+// }
 
 const createcon = (req, res) => {
     res.render("create");
     
 }
+
+const editcon = (req, res) => {
+    console.log("editcon");
+    const { id } = req.params;
+   
+    const singleRec = volstorage.find((vol) => vol.id == id);
+    if (!singleRec) {
+        // Handle the case where the record is not found
+        return res.status(404).send('Volunteer not found');
+    }
+    console.log("singlerec", singleRec);
+    res.render('editForm', { singleRec });
+};
 
 const updatecon = (req, res) => {
     const { id } = req.params;
